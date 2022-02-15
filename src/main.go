@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"indite/setup"
 
 	"github.com/tristanisham/colors"
+	"github.com/tristanisham/wng/setup"
 )
 
 func main() {
@@ -35,7 +35,7 @@ func main() {
 				log.Fatal(err)
 			}
 
-			
+
 
 			if err := blog.Dist(); err != nil {
 				log.Fatal(err)

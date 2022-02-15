@@ -1,4 +1,4 @@
-module indite
+module github.com/tristanisham/wng
 
 go 1.17
 
