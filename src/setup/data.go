@@ -48,7 +48,7 @@ func (d *DefaultBlog) GenIndex() string {
 		{{if .Public}}
 		<article>
 			<h1>{{.Title}}</h1>
-			<h6>{{.Subtitle}}</h6>
+			<h2>{{.Subtitle}}</h2>
 			<hr>
 			<div class="content">
 				{{.HTML}}
