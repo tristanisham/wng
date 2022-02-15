@@ -133,7 +133,7 @@ func (b *DefaultBlog) parseOptions(raw []string, article *Article) {
 				if choice == "1" || choice == "true" {
 					article.Public = true
 				}
-			case "tags":
+			case "tags", "keywords":
 				article.Tags = strings.Split(strings.ReplaceAll(opts[1], "\"", ""), ",")
 				for i := range article.Tags {
 					article.Tags[i] = strings.TrimSpace(article.Tags[i])
@@ -176,6 +176,7 @@ func (b *DefaultBlog) Dist() error {
 		return err
 	}
 
+
 	for _, file := range assets {
 		data, err := os.ReadFile(file.Name())
 		if err != nil {
@@ -183,6 +184,14 @@ func (b *DefaultBlog) Dist() error {
 		}
 
 		os.WriteFile("dist/assets/" + file.Name(), data, 0755)
+	}
+
+	css, err := os.ReadFile("src/index.css")
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile("dist/index.css", css, 0775); err != nil {
+		return err
 	}
 
 	templ := template.Must(template.New("index").Parse(string(index)))

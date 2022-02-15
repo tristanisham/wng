@@ -1,2 +1,2 @@
-indite:
-	cd src && go build -o ../dist/indite
+wng:
+	cd src && go build -o ../dist/wng
