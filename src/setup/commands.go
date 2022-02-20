@@ -96,12 +96,23 @@ func (b *DefaultBlog) buildArticles() error {
 			readFile.Close()
 
 			b.parseOptions(fileLines, article)
+			
 
 			b.Articles = append(b.Articles, *article)
 		}
 		return nil
 	}); err != nil {
 		return err
+	}
+
+	if strings.ToLower(b.Display) == "reversed" {
+		reversed := make([]Article, 0)
+
+		for i := len(b.Articles) - 1; i >= 0; i-- {
+			reversed = append(reversed, b.Articles[i])
+		}
+
+		b.Articles = reversed
 	}
 
 	return b.offload()
@@ -176,14 +187,13 @@ func (b *DefaultBlog) Dist() error {
 		return err
 	}
 
-
 	for _, file := range assets {
 		data, err := os.ReadFile(file.Name())
 		if err != nil {
 			return err
 		}
 
-		os.WriteFile("dist/assets/" + file.Name(), data, 0755)
+		os.WriteFile("dist/assets/"+file.Name(), data, 0755)
 	}
 
 	css, err := os.ReadFile("src/index.css")
@@ -195,7 +205,9 @@ func (b *DefaultBlog) Dist() error {
 	}
 
 	templ := template.Must(template.New("index").Parse(string(index)))
+
 	
+
 
 	for i := range b.Articles {
 		b.Articles[i].HTML = template.HTML(b.Articles[i].Body)
@@ -204,8 +216,6 @@ func (b *DefaultBlog) Dist() error {
 	var out bytes.Buffer
 	templ.Lookup("index").Execute(&out, b)
 
-	
 	return os.WriteFile("dist/index.html", out.Bytes(), 0775)
-	
 
 }

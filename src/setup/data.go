@@ -7,6 +7,7 @@ type DefaultBlog struct {
 	Description string    `json:"description"`
 	Keywords    []string  `json:"keywords"`
 	Theme       string    `json:"theme"`
+	Display     string    `json:"display"`
 	Articles    []Article `json:"articles"`
 }
 
@@ -16,7 +17,8 @@ func NewDefaultBlog() DefaultBlog {
 		Description: "",
 		Keywords:    []string{},
 		Theme:       "",
-		Articles:     []Article{},
+		Display:     "",
+		Articles:    []Article{},
 	}
 }
 
@@ -61,13 +63,12 @@ func (d *DefaultBlog) GenIndex() string {
 	</html>`
 }
 
-
 type Article struct {
-	Public   bool     `json:"public"`
-	Title    string   `json:"title"`
-	Subtitle string   `json:"subtitle"`
-	Tags     []string `json:"tags"`
-	Body     string   `json:"body"`
-	Slug     string   `json:"slug"`
-	HTML 	template.HTML `json:"html"`
+	Public   bool          `json:"public"`
+	Title    string        `json:"title"`
+	Subtitle string        `json:"subtitle"`
+	Tags     []string      `json:"tags"`
+	Body     string        `json:"body"`
+	Slug     string        `json:"slug"`
+	HTML     template.HTML `json:"html"`
 }
